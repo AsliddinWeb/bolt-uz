@@ -32,9 +32,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Auth
-    path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('auth/getMe/', getProfile, name='getMe'),
+    path('api/v1/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/getMe/', getProfile, name='getMe'),
 
     # Swagger
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
