@@ -59,3 +59,4 @@ class OrderItem(models.Model):
 
     class Meta:
         verbose_name_plural = "Buyurtma berilgan maxsulotlar"
+

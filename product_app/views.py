@@ -8,7 +8,7 @@ from rest_framework import status
 
 from .models import Category, Product, Order
 from .serializers import CategorySerializer, ProductSerializer, UserSerializer, \
-    OrderSerializer, OrderCreateSerializer
+    OrderSerializer, OrderCreateSerializer, OrderSerializer1
 
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -56,3 +56,23 @@ def getProfile(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+
+class OrderUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    def patch(self, request, *args, **kwargs):
+        # Buyurtma id sini olish (URL parametri)
+        order_id = kwargs.get('pk')
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return Response({"error": "Buyurtma topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Buyurtma holatini o'zgartirish
+        new_status = request.data.get('status')
+        if new_status == '1' or new_status == '2' or new_status == '3':
+            order.status = new_status
+            order.save()
+            serializer = OrderSerializer(order)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Status xato kiritildi!"}, status=status.HTTP_400_BAD_REQUEST)

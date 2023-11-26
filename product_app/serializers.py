@@ -66,3 +66,8 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+class OrderSerializer1(ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
