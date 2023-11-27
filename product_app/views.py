@@ -20,6 +20,17 @@ class ProductList(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
 
+class ProductDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, product_id, format=None):
+        try:
+            product_id = int(product_id)
+            product = Product.objects.get(id=product_id)
+            serializer = ProductSerializer(product)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except ValueError:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 class OrderListCreateView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     permission_classes = [IsAuthenticated]
