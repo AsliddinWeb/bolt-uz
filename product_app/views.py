@@ -37,7 +37,10 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return OrderCreateSerializer
+            if self.request.data.products != []:
+                return OrderCreateSerializer
+            else:
+                Response({"error": "Product listi bo'sh bo'lmasligi kerak!"}, status=status.HTTP_400_BAD_REQUEST)
         return OrderSerializer
 
 class OrderDetailView(generics.RetrieveAPIView):

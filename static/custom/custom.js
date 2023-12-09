@@ -13,3 +13,9 @@ for(let i = 0; i < status.length; i++) {
         element.innerHTML = "<p class='btn btn-danger'><b>Bekor qilindi</b></p>";
     }
 }
+
+const passwordInput1 = document.querySelector('#id_password1');
+const passwordInput2 = document.querySelector('#id_password2');
+
+passwordInput1.classList.add('form-control');
+passwordInput2.classList.add('form-control');
