@@ -3,6 +3,11 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from .models import Category, Product, Order, OrderItem
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
 class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
@@ -24,6 +29,7 @@ class OrderItemSerializer(ModelSerializer):
 class OrderSerializer(ModelSerializer):
     products = ProductSerializer(many=True)
     total_quantity = SerializerMethodField()
+    user = UserSerializer(many=False)
 
     class Meta:
         model = Order
@@ -62,10 +68,7 @@ class OrderCreateSerializer(ModelSerializer):
 
         return order
 
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = "__all__"
+
 
 class OrderSerializer1(ModelSerializer):
     class Meta:
